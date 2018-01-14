@@ -8,7 +8,8 @@ ADD phabric-php-ini.ini /usr/local/etc/php/conf.d/phabric-php-ini.ini
 
 # bash
 RUN apk add bash bash-doc bash-completion
-RUN echo 'export PS1="[\u@phabric_core] \W # "' >> /root/.profile
+RUN echo 'export PS1="[\u@phabric_core] \W # "' >> /root/.bashrc
+
 # pygmentize
 RUN apk add py-pygments
 

@@ -1,0 +1,38 @@
+version: '2'
+services:
+  core:
+    container_name: phabric-core
+    depends_on:
+      - db
+    build:
+      context: ./
+      dockerfile: core.dockerfile
+    working_dir: /codegym
+    volumes:
+      - app:/codegym
+
+  web:
+    container_name: phabric-web
+    build:
+      context: ./
+      dockerfile: web.dockerfile
+    working_dir: /codegym
+    volumes_from:
+      - core
+    ports:
+      - ${PORT}:80
+  db:
+    build:
+      context: ./
+      dockerfile: db.dockerfile
+    volumes:
+      - data:/var/lib/mysql
+    environment:
+      - MYSQL_USER="root"
+      - MYSQL_PASSWORD=""
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+volumes:
+  app:
+    driver: local
+  data:
+    driver: local
